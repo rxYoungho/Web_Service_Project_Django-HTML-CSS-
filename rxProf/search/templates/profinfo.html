@@ -1,0 +1,54 @@
+<!--
+This code is the main code for this web site. 
+It shows professor's name, email, and office number to the users(students)
+-->
+{% load crispy_forms_tags %}
+{% include "commoncss.html" %}
+
+{% include "header.html" %}
+<div style = "display: block;clear:both;">
+    <div class = 'underLine'>
+        <p> </p>
+    </div>
+</div>
+    <div class = 'prof-info-tot' style = "display: block;clear:both;">
+    {% for prof in object_list %}
+        <div class='profName'>
+            <p>Name: {{ prof.firstname }} {{ prof.lastname }}</p>
+        </div>
+        
+        <div class='profEmail'>
+            <p>Email: {{ prof.email }}</p>
+        </div>
+        
+        <div class ='officeLoc'>
+            <p>Office location: {{ prof.officeloc }}</p>
+        </div>
+        <!--This code is for LIKE BUTTON for each professers-->
+        <div class='likeBtn'>
+            <form action="#" method="post">{% csrf_token %}<input type="hidden" name="next" value="{{ request.path }}"><!--Like button-->
+            
+            {% if user.userstatus == 0 %}<input type="submit" class="btn" value="👍 {{ prof.rating }}" name="likebtn">
+            {% else %}
+            
+            <p style = 'align-items: left'>👍 {{ prof.rating }}</p>
+            {%endif%}
+            </form>
+        </div>
+        
+        <!--schedule shit-->
+        <!-- <iframe src="/calendar/?email={{prof.email}}" height = 500 width = 1200> ORIGINAL CODE FROM BACKEND--> 
+        <!-- Changed to below code to put table in the iframe-->
+
+        <table >
+            <tr>
+                <td>
+                    <iframe src="/calendar/?email={{prof.email}}" height = 500 width = 1600></iframe>
+                    <!--Here iframe is used to show a table inside a table-->
+                </td>
+            </tr>
+        </table>    
+
+        {% endfor %}
+    </div>
+</body>

@@ -1,0 +1,121 @@
+<!--A webpage for the calender when entering prrofessor info page-->
+<head>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://codepen.io/relaxdanny/pen/JjjgVWP.css" />
+		<!-- <link rel="stylesheet" href="commoncss.css" /> This Does not Work! Must be connected to Internet!!--> 
+	</head>
+
+<!--Create a table that contains weekly meeting time and daily schedules-->
+<table>
+
+	<tr>
+		{% for key in days %}
+			<th>
+			{{ key }}
+			</th>
+		{% endfor %}
+	</tr>
+	<tr>
+		{% for value in days.values %}
+			<td>
+			{% if value.0 %}
+				Free time: {{ value.0.0 }} to {{ value.0.1 }}
+			{% else %}
+				Free time: None
+			{% endif %}
+			</td>
+		{% endfor %}
+	</tr>
+	
+	<tr>
+		{% for value in days.values %}
+			<td >
+			{% for meeting in value.1 %}
+				Meeting from {{ meeting.0 }} to {{ meeting.1 }}{% if user.userstatus == 1%} with {{meeting.2}}{%endif%}</br>
+			{% endfor %}
+			</td>
+		{% endfor %}
+	</tr>
+	
+</table>
+
+
+{% if user.userstatus == 0 %}
+{% if messages %}
+<ul class="messages">
+	{% for message in messages %}
+	<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }} </li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="post" action="#">
+{% csrf_token %}
+<b>
+	<div style="font-size: large; padding-bottom: 10px; padding-top: 70px;"> 
+		Schedule new meeting</br>
+	</div>
+</b>
+<div style="padding-bottom: 10px;">
+	Date: <select name="date">
+
+	{% for key in days %}
+	<option value="{{ key }}">{{ key }}</option>
+	{% endfor %}
+	</select></br>
+</div>
+<div style="padding-bottom: 10px;">
+	Starting time (24-hour format): <input class="rounded-pill" placeholder="00:00"  type=text name="starttime"></br>
+</div>
+<div style="padding-bottom: 10px;">
+	Ending time (24-hour format): <input class="rounded-pill" placeholder="00:00"  type=text name="endtime"></br>
+</div>
+
+<input type=submit name="addmeeting" value="Submit">
+</form>
+<form method="post" action="#">
+{% csrf_token %}
+
+<b>
+	<div style="font-size: large; padding-bottom: 10px; padding-top: 30px;"> 
+		Delete meeting</br>
+	</div>
+</b>
+<div style="padding-bottom: 10px;">
+	Meeting: <select name="meeting">
+
+	{% for key, value in days.items %}
+			{% for meeting in value.1 %}
+				{% if meeting.2 == user.get_username %}
+					<option value="{{ meeting.3 }}">Meeting on {{ key }} from {{ meeting.0 }} to {{ meeting.1 }}</option>
+				{% endif %}
+			{% endfor %}
+	{% endfor %}
+</select></br>
+</div>
+<input type=submit name="deletemeeting" value="Submit"> <!-- added 'value="Submin" to change from "제출" to "submit"-->
+</form>
+
+{% endif %}
+{% if user.userstatus == 1 %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="post" action="#">
+{% csrf_token %}
+Delete meeting</br>
+Meeting: <select name="meeting">
+	{% for key, value in days.items %}
+			{% for meeting in value.1 %}
+				{% if meeting.4 == user.get_username %}
+					<option value="{{ meeting.3 }}">Meeting on {{ key }} from {{ meeting.0 }} to {{ meeting.1 }}</option>
+				{% endif %}
+			{% endfor %}
+	{% endfor %}
+</select></br>
+<input type=submit name="deletemeeting">
+</form>
+{% endif %}

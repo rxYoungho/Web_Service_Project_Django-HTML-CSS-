@@ -1,0 +1,64 @@
+{% load crispy_forms_tags %}
+{% include "commoncss.html" %}
+<body>
+{% include "header.html" %}
+{% if user.userstatus != 1 %}
+
+<meta http-equiv="refresh" content="0;url={% url 'search:search' %}" />
+{% endif %}
+<div style = "display: block;clear:both;">
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+<form method="post", action="#">
+{% csrf_token %}
+	First name: <input type="text" name="firstname" value={{ user.firstname }}></br>
+	Last name: <input type="text" name="lastname" value={{ user.lastname }}></br>
+	Email address: <input type="text" name="email" value={{ user.email }}></br>
+	Current password: <input type="password" name="curpass"></br>
+	New password: <input type="password" name="newpass"> (Leave blank if not changing)</br>
+	<input type="submit" name="personalinfo"></br>
+</form>
+</br>
+Current free timeslots:</br>
+{% for key, meeting in days.items %}
+				{% if meeting.2 == user.get_username %}
+					Timeslot on {{ key }} from {{ meeting.0 }} to {{ meeting.1 }}</br>
+				{% endif %}
+	{% endfor %}
+</br>
+</br>
+<form method="post" action="#">
+{% csrf_token %}
+Add free timeslot</br>
+Day of the week: <select name="weekday">
+	<option value="Monday">Monday</option>
+	<option value="Tuesday">Tuesday</option>
+	<option value="Wednesday">Wednesday</option>
+	<option value="Thursday">Thursday</option>
+	<option value="Friday">Friday</option>
+	<option value="Saturday">Saturday</option>
+	<option value="Sunday">Sunday</option>
+</select></br>
+Starting time (24-hour format): <input type=text name="starttime"></br>
+Ending time (24-hour format): <input type=text name="endtime"></br>
+<input type=submit name="addtime">
+</form>
+<form method="post" action="#">
+{% csrf_token %}
+Delete free timelot</br>
+Select slot: <select name="meeting">
+	{% for key, meeting in days.items %}
+				{% if meeting.2 == user.get_username %}
+					<option value="{{ meeting.3 }}">Timeslot on {{ key }} from {{ meeting.0 }} to {{ meeting.1 }}</option>
+				{% endif %}
+	{% endfor %}
+</select></br>
+<input type=submit name="deletetime">
+</form>
+</div>
+</body>

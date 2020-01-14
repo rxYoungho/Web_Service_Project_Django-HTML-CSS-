@@ -1,0 +1,33 @@
+ <!-- Below are common html and Django code for the other web pages-->
+ 
+ <div class="logoSearchBox"> <!--A class for designing rxProf LOGO-->
+    <span style="float:left;">
+    <div class='logo'>
+        <h1>
+            <a href="{% url 'search:search' %}"><span>r</span><span>x</span><span>P</span><span>r</span><span>o</span><span>f</span></a>
+        </h1>
+    </div>
+        
+    </span>
+
+ <span style="float:right;"> <!--Used float:right method to put user status and Log in and out buttons on the right side-->
+{% if user.is_authenticated %}
+    
+    <div class ='status'> <!--Shows whether user is logged in or not-->
+        <p>Currently logged in as {{ user.get_username }}</p>
+    </div>
+	<button style="float:right;"class="rounded-pill btn btn-outline-secondary" id="logout-btn" onclick="window.location='/accounts/logout';">Logout</button>
+	 {% if user.userstatus == 1 %}
+		<button class="rounded-pill btn btn-outline-secondary" id="logout-btn" onclick="window.location='/accounts/settings';">Settings</button>
+	{% endif %}
+{% else %}
+   
+<!--Simple design here: buttons for sign in and sign up-->>
+        <button class="rounded-pill btn btn-outline-secondary" id="sign-in-btn" onclick="window.location='/accounts/redirect_l';">Sign in</button>
+        <button class="rounded-pill btn btn-outline-secondary" id="sign-up-btn" onclick="window.location='/accounts/redirect_r';">Sign up</button>
+
+        
+{% endif %}
+</span>   
+</div>
+

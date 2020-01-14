@@ -1,0 +1,31 @@
+{% load crispy_forms_tags %}
+<html lang="ko">
+{% include "commoncss.html" %}
+<body>
+    
+    {% include "header.html" %}
+    <div class="logoSearchBox">
+        <div class ='log'>
+            <h1>
+                <span>r</span><span>x</span><span>P</span><span>r</span><span>o</span><span>f</span>
+            </h1>
+        </div>
+        
+
+            <div class="search-bar input-group mb-3">
+				
+                <form action="{% url 'search:search' %}" method="post">
+					{% csrf_token %}
+					<input name="q" type="text" placeholder="Search...">
+				</form>
+            </div>
+
+    </div>
+    <div class="profInfo">
+        {% for prof in object_list %}
+      {{ prof.firstname }} {{ prof.lastname }}, {{ prof.email }}, {{ prof.officeloc }}
+  {% endfor %}
+    </div>
+    
+</body>
+</html>

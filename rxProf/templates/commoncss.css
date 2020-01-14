@@ -1,0 +1,108 @@
+/* 
+The same css code is copied to https://codepen.io/relaxdanny/pen/JjjgVWP.css
+The html is not refering to this css file!!
+*/
+.logo {
+  position: relative;
+  margin: 0 auto;
+  margin-left: 20px;
+  top: 7px;
+  left: 22px;
+  padding-left: 27px;
+  display: inline;
+}
+.logo span{ 
+color: black;
+}
+
+.logo span:nth-child(1) {
+  color: #fbbc02;
+}
+.logo span:nth-child(2) {
+  color: #fbbc02;
+}
+.search-bar{
+  position: relative;
+  margin: 0 auto;
+  margin-left: 119px;
+  width: 640px;
+  padding-left: 27px;
+  
+}
+.login-signup{
+  text-align: right;
+  display: inline;
+}
+
+.logoSearchBox{
+  border-bottom: 1px solid #e1e3e9;
+  border-left: 1px solid #e1e3e9;
+  
+}
+.profInfo{
+margin-left: 165px;
+}
+.status{
+font: icon;
+}
+.prof-info-tot{
+padding-left: 27px;
+font-family: Palatino, URW Palladio L, serif;
+font-weight: 600;
+}
+.underLine{
+  padding-top: 38px;
+  border-bottom: 1px solid #e1e3e9;
+  border-left: 1px solid #e1e3e9; 
+}
+table, td, th {  
+border: 1px solid #ddd;
+text-align: center;
+}
+tr:nth-child(even) {background-color: #f2f2f2;}
+table {
+border-collapse: collapse;
+width: 100%;
+}
+th, td {
+padding: 20px;
+}
+
+.wrap{
+padding:200px 0;
+color: #212529;
+width:400px;
+font-family:'Karla';
+margin:0 auto;
+text-align:left;
+}
+
+button{
+border:0;
+background:transparent;
+padding:5px;
+position:relative;
+outline:0;
+}
+
+.forgot{
+background:#a0a0a0;
+color:#fff;
+float:left;
+}
+
+.login{
+background:#a0a0a0;
+color:#fff;
+float:right;
+font-size: 14;
+}
+
+.login.buttonafter {
+  background:#14a03d;
+}
+
+
+
+
+

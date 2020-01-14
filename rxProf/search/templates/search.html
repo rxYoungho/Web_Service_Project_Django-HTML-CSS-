@@ -1,0 +1,29 @@
+<!--
+This page is the initial page when user enters rxProf website.
+User can directly search for their professors.
+
+-->
+{% load crispy_forms_tags %}
+<html lang="en">
+{% include "commoncss.html" %} 
+
+<body>
+ <!--A simple design is used: Main Logo at the top-left and search button beside it-->
+    {% include "header.html" %}
+	<div style = "display: block;clear:both;">
+    <div class = 'logoSearchBox'>
+        <form action="{% url 'search:search' %}" method="get">
+            <div class="search-bar input-group mb-3" style="left: 20px; bottom: 40px;">
+                <input name = 'q' type="text" class="rounded-pill form-control" placeholder="Search Professor" aria-label="Search Professor" aria-describedby="button-addon2">         
+            </div>
+        </form>    
+    </div>
+    <div class="profInfo">
+        {% for prof in object_list %}
+      <a href="/profinfo/?email={{ prof.email }}">{{ prof.firstname }} {{ prof.lastname }}, {{ prof.email }}, {{ prof.officeloc }}</a>
+  {% endfor %}
+    </div>
+    </div>
+</body>
+
+

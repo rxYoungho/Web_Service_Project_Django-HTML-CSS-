@@ -1,0 +1,18 @@
+
+{% load crispy_forms_tags %}
+{% include "commoncss.html" %}
+<body>
+{% include "header.html" %}
+{% if user.is_authenticated %}
+
+<meta http-equiv="refresh" content="0;url={% url 'search:search' %}" />
+{% endif %}
+<div class='wrap'>
+  <h1>Sign up</h1>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit">Sign up</button>
+  </form>
+  </div>
+ </body>
